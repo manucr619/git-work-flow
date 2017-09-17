@@ -1,0 +1,30 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "No one ever sees the readme file",
+  "main": "index.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.4",
+    "body-parser": "^1.17.2",
+    "express-session": "^1.15.5",
+    "jsonfile": "^3.0.1",
+    "mongoose": "^4.11.9",
+    "multer": "^1.3.0",
+    "pug": "^2.0.0-rc.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "lol"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manucr619/git-work-flow.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manucr619/git-work-flow/issues"
+  },
+  "homepage": "https://github.com/manucr619/git-work-flow#readme"
+}
