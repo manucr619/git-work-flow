@@ -1,0 +1,103 @@
+ <html> 
+ 
+ <head>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<link rel="shortcut icon" href="#" />
+
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Data Form</title>
+ 
+ </head>
+
+<style>
+h2 {text-align: center; color: grey}	
+body {background-color: #f6f6f6;}
+
+ .reports{
+ 	float: right; margin-right: 20px ; border: 1px solid black; background-color: #00f5c4;  border-style: outset;
+ }
+ .reports:hover 
+ {
+ 	font-size: 20px; 
+ }
+
+.pullLeft{
+	float:left;
+}
+.containerClass{
+	width:50%;
+	margin:auto;
+	border: 1px solid #fff;
+	padding: 2%;
+	background:white;
+    margin-top: 120px;
+}
+input{
+	outline: none;
+	height: 22px;
+    width: 160px;
+}
+.btn{
+	clear: both;
+    border: 1px solid #efefef;
+    background: white;
+    line-height: 15px;
+    /*border-radius: 5px;*/
+     background: #fd7a7a;
+    color: white;
+    height: 40px;
+    font-size: 17px;
+
+}
+</style>
+<body >
+ <h2 style = "margin-top: 30px;">Edit Your Profile</h2>
+
+ <div class = "reports" ><a  href = "/personaldetails">Reports</a></div>
+
+ <div class="containerClass">
+<div id = "editController" ng-app = "mainApp" ng-controller = "editController" > 
+
+<form method="post"  action = "http://172.24.100.207:1234/api/editSubmit"  enctype="multipart/form-data" style="margin: auto;width: 80%;">
+
+
+<div style="position:relative;display: inline-block;text-align: center;">
+		<div class="pullLeft">
+			<div><label class ="labels">Name:</label></div>
+			<div><input class = "box" id ="name" type="text" name="name" value = "{{name}}" type="text" name="name" required> </div>
+		</div>
+			<input class = "box" id ="id" type="hidden" name="id" value = "{{id}}" required>
+		<div class="pullLeft">
+			<div><label class ="labels">Age: </label></div>
+			<div><input class = "box" type="text" id ="age" name="age" value = "{{age}}" required> </div>
+		</div>
+		<div class="pullLeft">
+			<div><label class ="labels">Number :</label></div>
+			<div><input class = "box" type="number" id ="number" maxlength="10" name="number" value = "{{number}}" required></div>
+		</div>
+		<div class="pullLeft">
+			<div><label class ="labels">Date :</label></div>
+			<div><input class = "box" type="date" name="date" id = "date" value = "{{date}}" required></div>
+		</div>
+	<!--	<div class="pullLeft">
+			<div><label class ="labels">Image :</label></div>
+			<div><input class = "box" type="file" id= "image" name="image" value = "c://{{image}}"   required></div>
+		</div> -->
+	</div>
+</div>
+		<div style="clear: both;text-align: center;margin:3%; ">
+			<input style="clear: both;" class="btn" type="submit">
+</div>
+</form>
+</div>
+</div>
+<script src = "/editcontroller.js"></script> 
+</body>
+        
+
+
+ </html>      

@@ -1,0 +1,152 @@
+<html>
+  <head>
+      <title>Data Details</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.min.js"></script>
+      <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+      <link rel="shortcut icon" href="#" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <style>
+
+    body 
+    { 
+      background-color:#fff; overflow: scroll;
+    }
+    th{ 
+        color:grey; text-align: center;  font-family:courier;  height: 70px; 
+        vertical-align: middle ; 
+     }
+    table {
+      width: 100%; 
+      border-collapse: collapse;
+      border:  1px solid black;
+      text-align: center; 
+      vertical-align: center; 
+    }
+    td
+    {
+      height: 70px;  border-top-style: outset;
+    }
+    tr:hover{
+       background-color: #efeeee;
+    }
+    tr
+    {
+      height: 10px;
+    }
+    .form-control{
+    margin: 10px; padding-left :10px;
+    }
+    .add{
+    font-size: 25px; border: 1px solid black;
+     background-color: #1abc9c;  float: right; margin-right: 20px; 
+    }
+    .add:hover {
+   font-size: 29px ;  
+    }
+    .popup{
+    right: 0;
+    position: fixed;
+    width: 43%;
+    z-index: 99;
+    top: 0;
+    background: #ffffff;
+    padding: 1%;
+    box-sizing: border-box;
+    border: 1px solid #ececec;
+    box-shadow: 2px 2px 2px #f2f2f2;
+    padding-top: 5.5%;
+    overflow: hidden;
+    bottom: 0;
+    height: 99vh;
+    }
+    .closebutton{
+      right: 0;     position: absolute;      top: 0;  font-size:20px; 
+      padding: 3%;    width: 32px;    height: 32px;    text-align: center;    cursor: pointer;
+    }
+    .closebutton:hover{
+      color:red;
+    }
+   
+  </style>
+  <body>
+    <div id ="dataController"  ng-app = "mainApp" ng-controller = "dataController" >
+          <h2 style="margin-top: 20px; text-align: center;">Details of Users</h2>
+          <label>search:</label>
+          <input type="text" ng-model="search" id="search" class="form-control" placeholder="Search">
+          <select   type = "text" id= "filter" ng-model = "filterssearch">
+              <option value>-- Select Filter --</option>
+              <option  ng-repeat = "data in datas" value = "{{data.name}}">{{data.name}}</option>
+          </select>
+          <select ng-model="pageSize" id="pageSize" class="form-control">
+              <option value="5" >5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option ng-selected="20">20</option>
+          </select>
+          <label><a href = "/" class = "add">
+          <i style = "color: cornsilk" class = "fa fa-plus"></i>
+          </a>
+          <p ng-show = "selectone1" >edit</p>
+          </label>
+		  
+		  
+		  
+          <table >
+           <tr>
+		   
+              <th><input ng-model="selectAll" type = "checkbox" name = "selectall" ></th>
+              <th>PROPERTIES</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>AGE</th>
+              <th>NUMBER</th>
+              <th>DATE</th>
+              <th>Image</th>
+          </tr
+		  
+		  
+          <tr ng-repeat = "data in datas |filter:search | filter : filterssearch  |startFrom : currentPage*pageSize| limitTo:pageSize | orderBy:'name' "  >
+              <a  style = " color: blue; cursor: pointer;margin: 10px;" ng-show = "selectAll" ng-click = "deleteAll()" >delete</a>
+              <a  style = " color: blue; cursor: pointer; margin: 10px;" ng-show = "selectAll" ng-click = "duplicate()" >duplicate</a>
+              <td><input ng-checked="selectAll " type = "checkbox" ></td>
+              <td>
+                  <a href = "/edit/{{data._id}}" style="margin: 3px; font-size: 15px;"><i class="fa fa-pencil"></i></a> 
+                  <a href = "/delete/{{data._id}}" style="margin: 3px; font-size: 15px;" ><i class="fa fa-trash-o"></i></a>
+                  <a href = "/api/duplicate/{{data.name}}/{{data.number}}/{{data.age}}/{{data.date}}/{{data.image}}" style="margin: 3px; font-size: 15px;"><i class="fa fa-files-o"></i></a>
+              </td>
+              <td ng-click = "onclickshow(data._id)" >{{data._id}}</td>
+              <td ng-click = "onclickshow(data._id)">{{data.name | uppercase}}</td>
+              <td ng-click = "onclickshow(data._id)">{{data.age}}</td> 
+              <td ng-click = "onclickshow(data._id)">{{data.number}}</td>
+              <td ng-click = "onclickshow(data._id)" >{{data.date.slice(0,10)}}</td>
+              <td ng-click = "onclickshow(data._id)"><a target="_blank" href="{{data.image}}" ><img style="max-height: 45px;" src = "{{data.image}}"></a></td>
+          </tr>
+		  
+		  
+        </table>
+            <div style= "padding-top: 20px;vertical-align: middle; padding-bottom: 50px;">
+                <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1"> Previous</button>
+                  {{currentPage+1}}/{{numberOfPages()}}
+                 <button ng-disabled="currentPage >= datas.length/pageSize - 1" ng-click="currentPage=currentPage+1">Next </button>
+                  Total:{{datas.length}}
+            </div>
+      	<div> 
+            <div class = "popup" ng-show= "visible" >
+            <div class= "closebutton" ng-click = "onclickhide()" >x</div>
+            <div style = "padding-left: 279px;padding-bottom: 36px; font-size: 20px;">Detailed summary</div>
+            <table>
+                <tr><th>{{recorddata.name}}</th></tr>
+                <tr><th>{{recorddata.age}}</th></tr>
+                <tr><th>{{recorddata.number}}</th></tr>
+                <tr><th>{{recorddata.date}}</th></tr>
+                <tr><th><img style="max-height: 100px" src = "/files/{{recordimage}}"></th></tr> 
+            </table>
+            </div>
+        </div>
+   </div> 
+  <script src = "/controller.js"></script> 
+  </body>
+</html>
